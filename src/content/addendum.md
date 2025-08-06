@@ -4,4 +4,4 @@ avatarImage:
   alt: 'My avatar'
 ---
 
-Thanks for reading my blog post! Feel free to check out my other posts or contact me via the social links in the footer.
+"The uncertainty expressed by the range of possible values inherent in human limitations to understand the system."
