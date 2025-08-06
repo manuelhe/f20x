@@ -57,7 +57,7 @@ const config: SiteConfig = {
     //   'github-dark',
     // ]
     include: [
-      'slack-dark',
+      'plastic',
       'slack-ochin',
     ],
   },
@@ -75,10 +75,10 @@ const config: SiteConfig = {
   // Take the values from the generated script tag at https://giscus.app and fill them in here.
   // If you don't want to use Giscus, set this to undefined.
   giscus: {
-    repo: 'stelcodes/multiterm-astro',
-    repoId: 'R_kgDOPNnBig',
-    category: 'Giscus',
-    categoryId: 'DIC_kwDOPNnBis4CteOc',
+    repo: 'manuelhe/f20x',
+    repoId: 'R_kgDOPY9bkQ',
+    category: 'Announcements',
+    categoryId: 'DIC_kwDOPY9bkc4Ct0z1',
     reactionsEnabled: true, // Enable reactions on post itself
   },
 }
