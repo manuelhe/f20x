@@ -1,13 +1,12 @@
 ---
 title: 'Shrink Your Stash: Breaking Down the Ultimate WebP Converter Script'
-published: 2026-003-17
+published: 2026-03-17
 draft: false
 tags: ['bash', 'webp', 'image-manipulation', 'parallel-processing', 'command-line']
 toc: true
 coverImage:
   src: './demo-bulkwebp.webp'
   alt: 'An example image of the bulkwebp script working.'
-
 description: 'Hoarding massive images? Let´s dissect a slick Bash script that multi-threads WebP conversions.'
 ---
 Hey there. So, you’ve been hoarding high-res PNGs and JPEGs. Maybe it’s a folder of 4K cat photos, maybe it’s an overblown website assets directory. We’ve all been there. Well, as an Web Developer, I have a physical hard drive that gets bogged down with giant files, and absolutely feel your pain when things run slower than they need to. 
