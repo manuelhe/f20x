@@ -17,7 +17,7 @@ import type {
   GitHubActivityDay,
   GitHubActivityWeek,
   GitHubActivityMonthLabel,
-} from '@types'
+} from '~/types'
 
 interface Props {
   username: string
@@ -48,10 +48,9 @@ async function fetchData(
   const apiUrl = 'https://github-contributions-api.jogruber.de/v4/'
   const response = await fetch(`${apiUrl}${username}?y=${String(year)}`)
   const data = (await response.json()) as GitHubActivityApiResponse
-  if (!response.ok && data.error) {
-    throw Error(
-      `Fetching GitHub contribution data for "${username}" failed: ${data.error}`,
-    )
+  if (!response.ok) {
+    const message = data.error || 'Unknown error'
+    throw Error(`Fetching GitHub contribution data for "${username}" failed: ${message}`)
   }
 
   validateActivities(data.contributions)
@@ -274,7 +273,7 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin
   </div>
   {
     !(hideTotalCount && hideColorLegend) && (
-      <footer class="flex flex-wrap gap-x-1 gap-y-4 whitespace-nowrap">
+      <footer class="flex flex-col sm:flex-row sm:justify-between gap-x-1 gap-y-2">
         {!hideTotalCount && (
           <div>
             {labels.totalCount
@@ -285,7 +284,7 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin
           </div>
         )}
         {!hideColorLegend && (
-          <div class="ml-auto flex items-center gap-[3px]">
+          <div class="flex items-center gap-[3px]">
             <span class="mr-1.5">{labels.legend.less}</span>
             {range(maxLevel + 1).map((level) => (
               <svg width={blockSize} height={blockSize}>

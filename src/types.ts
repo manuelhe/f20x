@@ -1,5 +1,6 @@
 import type { MarkdownHeading } from 'astro'
 import type { BundledShikiTheme } from 'astro-expressive-code'
+import type { CollectionEntry, DataEntryMap } from 'astro:content'
 
 export type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6 // 0 = Sunday, 1 = Monday etc.
 
@@ -44,6 +45,26 @@ export interface FrontmatterImage {
   }
 }
 
+export interface Collation<CollectionType extends keyof DataEntryMap> {
+  title: string
+  url: string
+  titleSlug: string
+  entries: CollectionEntry<CollectionType>[]
+}
+
+export interface CollationGroup<CollectionType extends keyof DataEntryMap> {
+  title: string
+  url: string
+  collations: Collation<CollectionType>[]
+  // Return this.collations to allow chaining
+  sortCollationsAlpha(): Collation<CollectionType>[]
+  sortCollationsMostRecent(): Collation<CollectionType>[]
+  sortCollationsLargest(): Collation<CollectionType>[]
+  add(item: CollectionEntry<CollectionType>, rawKey: string): void
+  match(title: string): Collation<CollectionType> | undefined
+  matchMany(titles: string[]): Collation<CollectionType>[] | undefined
+}
+
 export type NavLink = {
   name: string
   url: string
@@ -52,38 +73,44 @@ export type NavLink = {
 
 export type AdmonitionType = 'tip' | 'note' | 'important' | 'caution' | 'warning'
 
-const themeKeys = [
+export const themeKeys = [
   'foreground',
   'background',
   'accent',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'li',
-  'hr',
+  // Markdown styles
+  'heading1',
+  'heading2',
+  'heading3',
+  'heading4',
+  'heading5',
+  'heading6',
+  'list',
+  'separator',
   'italic',
-  'a',
+  'link',
+  // For admonition styling
+  'note',
+  'tip',
+  'important',
+  'caution',
+  'warning',
+  // For Giscus syntax highlighting only
+  'comment',
+  'constant',
+  'entity',
+  'tag',
+  'keyword',
+  'string',
+  'variable',
+  'regexp',
+  // Terminal colors for user customization only, not used by default
   'blue',
   'green',
   'red',
   'yellow',
   'magenta',
   'cyan',
-  // For Giscus syntax highlighting
-  'comment',
-  'constant',
-  'entity',
-  'entityTag',
-  'keyword',
-  'string',
-  'variable',
-  'regexp',
 ] as const
-
-console.log
 
 export type ThemeKey = (typeof themeKeys)[number]
 
@@ -110,11 +137,13 @@ export type ColorStyles = {
 //   },
 // }
 export type ThemesWithColorStyles = Partial<Record<BundledShikiTheme, ColorStyles>>
+export type ThemeOverrides = Partial<Record<BundledShikiTheme, Partial<ColorStyles>>>
 
 export interface ThemesConfig {
   default: BundledShikiTheme | 'auto'
   mode: 'single' | 'light-dark-auto' | 'select'
   include: BundledShikiTheme[]
+  overrides?: ThemeOverrides
 }
 
 export type SocialLinks = {
@@ -144,8 +173,10 @@ export interface SiteConfig {
   socialCardAvatarImage: string
   tags: string[]
   pageSize: number
+  trailingSlashes: boolean
   themes: ThemesConfig
   socialLinks: SocialLinks
   navLinks: NavLink[]
-  giscus: GiscusConfig | undefined
+  giscus: GiscusConfig | undefined,
+  characters: Record<string, string>
 }
