@@ -1,30 +1,52 @@
-# Project Context: f20x.com
+## Workflow Orchestration
 
-This is an Astro-based personal blog with a terminal-inspired aesthetic. It leverages a rich set of custom Markdown/MDX plugins to provide specialized content rendering.
+### 1. Plan Mode Default
+- Enter plan mode for ANY non-trivial task (3+ steps or architectural decisions)
+- If something goes sideways, STOP and re-plan immediately — don't keep pushing
+- Use plan mode for verification steps, not just building
+- Write detailed specs upfront to reduce ambiguity
 
-## Core Mandates
+### 2. Subagent Strategy
+- Use subagents liberally to keep main context window clean
+- Offload research, exploration, and parallel analysis to subagents
+- For complex problems, throw more compute at it via subagents
+- One task per subagent for focused execution
 
-### Technical Stack
-- **Framework:** Astro 5.x (using Content Layer API).
-- **Styling:** Tailwind CSS v4 (configured via `@tailwindcss/vite`).
-- **Markdown/MDX:** Highly customized with Remark and Rehype plugins (see `src/plugins/`).
-- **Type Safety:** TypeScript is mandatory for all new logic.
-- **Formatter:** Prettier (run `npm run format` after modifications).
+### 3. Self-Improvement Loop
+- After ANY correction from the user: update `tasks/lessons.md` with the pattern
+- Write rules for yourself that prevent the same mistake
+- Ruthlessly iterate on these lessons until mistake rate drops
+- Review lessons at session start for relevant project
 
-### Architectural Conventions
-- **Components:** UI components are located in `src/components/` and use `.astro` format.
-- **Content:** Blog posts and other content are in `src/content/`. Always use the `content.config.ts` for schema definitions.
-- **Plugins:** Before modifying Markdown rendering, check `src/plugins/` to see if a similar feature already exists or if it should be added as a new plugin.
-- **Site Config:** Global settings, including social links and theme preferences, are in `src/site.config.ts`.
+### 4. Verification Before Done
+- Never mark a task complete without proving it works
+- Diff behavior between main and your changes when relevant
+- Ask yourself: "Would a staff engineer approve this?"
+- Run tests, check logs, demonstrate correctness
 
-### Engineering Standards
-- **Surgical Updates:** When modifying `astro.config.mjs` or `src/plugins/`, ensure that existing rendering behavior is preserved unless explicitly requested.
-- **Validation:** Always run `npm run build` to ensure the project compiles and Pagefind indexing succeeds.
-- **Styling:** Adhere to the terminal-inspired theme. Use existing CSS variables and Tailwind utility classes. Avoid introducing new CSS frameworks.
-- **Responsive Design:** Ensure all components are mobile-friendly, especially with the `image.responsiveStyles` enabled in Astro.
+### 5. Demand Elegance (Balanced)
+- For non-trivial changes: pause and ask "is there a more elegant way?"
+- If a fix feels hacky: "Knowing everything I know now, implement the elegant solution"
+- Skip this for simple, obvious fixes — don't over-engineer
+- Challenge your own work before presenting it
 
-### Critical Workflows
-- **New Posts:** Add a new directory in `src/content/posts/` with an `index.md` or `index.mdx` file.
-- **Formatting:** Always run `npm run format` before finalizing changes to ensure consistency with the project's style.
-- **Build Verification:** Execute `npm run build` to verify that changes don't break the static site generation.
+### 6. Autonomous Bug Fixing
+- When given a bug report: just fix it. Don't ask for hand-holding
+- Point at logs, errors, failing tests — then resolve them
+- Zero context switching required from the user
+- Go fix failing CI tests without being told how
 
+## Task Management
+
+1. **Plan First**: Write plan to `tasks/todo.md` with checkable items
+2. **Verify Plan**: Check in before starting implementation
+3. **Track Progress**: Mark items complete as you go
+4. **Explain Changes**: High-level summary at each step
+5. **Document Results**: Add review section to `tasks/todo.md`
+6. **Capture Lessons**: Update `tasks/lessons.md` after corrections
+
+## Core Principles
+
+- **Simplicity First**: Make every change as simple as possible. Impact minimal code.
+- **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
+- **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
