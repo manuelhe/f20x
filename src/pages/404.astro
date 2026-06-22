@@ -2,6 +2,393 @@
 import Layout from '~/layouts/Layout.astro'
 ---
 
-<Layout>
-  <h1 class="inline-block m-auto p-4 text-accent text-4xl">404</h1>
+<Layout title="404: Command Not Found">
+  <div class="terminal-container my-6">
+    <div class="crt-screen">
+      <!-- Screen Header mimicking a macOS or Unix console window -->
+      <div class="terminal-header">
+        <div class="window-controls">
+          <span class="dot close"></span>
+          <span class="dot minimize"></span>
+          <span class="dot expand"></span>
+        </div>
+        <span class="terminal-title">f20x-cli v1.0.0</span>
+      </div>
+      
+      <!-- Console Content Area -->
+      <div class="terminal-body">
+        <p class="system-alert">[!] SYSTEM ALERT: ACCESS_VIOLATION [!]</p>
+        <div class="divider"></div>
+        <p class="diag-line">SECTOR: <span class="accent-text">0x404 (NOT_FOUND)</span></p>
+        <p class="diag-line">HOST: <span class="text-foreground/80">f20x.com</span></p>
+        <p class="diag-line">PATH: <span class="error-text" id="invalid-path">/loading...</span></p>
+        <div class="divider"></div>
+        
+        <!-- Interactive logs with staggered delayed styling -->
+        <div class="console-log">
+          <p><span class="accent-text">$</span> f20x-cli --locate-route</p>
+          <p class="log-line">> Initializing routing table audit...</p>
+          <p class="log-line">> Verifying static HTML entries... <span class="fail-text">[FAIL]</span></p>
+          <p class="log-line">> Querying local markdown databanks... <span class="fail-text">[NOT_FOUND]</span></p>
+          <p class="log-line">> Attempting fallback redirects... <span class="fail-text">[TERMINATED]</span></p>
+          <p class="log-line error-text font-bold animate-pulse">> FATAL: Target resource does not exist in local schema.</p>
+        </div>
+
+        <!-- Fun quotes from site characters -->
+        <div class="character-box my-6">
+          <p class="char-title">💬 LOCAL SUBROUTINE COM-FEED:</p>
+          <div class="char-quotes">
+            <p class="quote">
+              <span class="icon">🦉</span> 
+              <span class="char-name">Owl:</span> 
+              <span class="msg">"I've crawled the AST. This URL has zero valid branches."</span>
+            </p>
+            <p class="quote">
+              <span class="icon">🦄</span> 
+              <span class="char-name">Unicorn:</span> 
+              <span class="msg">"A 404! How exceptionally magical! You've discovered a secret void."</span>
+            </p>
+            <p class="quote">
+              <span class="icon">🦆</span> 
+              <span class="char-name">Duck:</span> 
+              <span class="msg">"Just a broken path. Don't let it ruffle your feathers, friend."</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <p class="instructions">Choose a subroutine to execute:</p>
+        
+        <!-- Interactive navigation prompt -->
+        <nav class="recovery-nav font-mono">
+          <a href="/" class="cli-link">
+            <span class="prompt-arrow">></span> cd <span class="cmd-path">/</span> 
+            <span class="comment"># Return to homepage</span>
+          </a>
+          <a href="/posts" class="cli-link">
+            <span class="prompt-arrow">></span> cd <span class="cmd-path">/posts</span> 
+            <span class="comment"># Browse latest articles</span>
+          </a>
+          <a href="/about" class="cli-link">
+            <span class="prompt-arrow">></span> cd <span class="cmd-path">/about</span> 
+            <span class="comment"># Learn about Manuel</span>
+          </a>
+          <a href="#" id="history-back-btn" class="cli-link">
+            <span class="prompt-arrow">></span> history -b 
+            <span class="comment"># Teleport back in history</span>
+          </a>
+        </nav>
+        
+        <!-- Live blinking terminal cursor -->
+        <div class="mt-4 font-mono select-none flex items-center gap-1">
+          <span class="accent-text">f20x-cli:~ $</span>
+          <span class="blinking-cursor"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // Dynamically populate the broken URL path into the terminal body
+  const pathSpan = document.getElementById('invalid-path');
+  if (pathSpan) {
+    pathSpan.textContent = window.location.pathname;
+  }
+
+  // Handle the history back interaction cleanly
+  const historyBtn = document.getElementById('history-back-btn');
+  if (historyBtn) {
+    historyBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      history.back();
+    });
+  }
+</script>
+
+<style>
+  /* Base Container Styling */
+  .terminal-container {
+    width: 100%;
+    max-width: 100%;
+    perspective: 1000px;
+  }
+
+  /* CRT Monitor Screen */
+  .crt-screen {
+    position: relative;
+    background: rgba(13, 16, 23, 0.95);
+    border: 1.5px solid rgba(var(--theme-accent), 0.2);
+    border-radius: 12px;
+    box-shadow: 
+      0 12px 40px -4px rgba(0, 0, 0, 0.5),
+      0 0 20px 0px rgba(var(--theme-accent), 0.05),
+      inset 0 0 40px rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    color: var(--theme-foreground);
+    animation: screen-turn-on 0.4s ease-out;
+  }
+
+  /* Scanlines pseudo-element overlaying the CRT */
+  .crt-screen::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.15) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  /* Terminal Window Header */
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .window-controls {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.75;
+  }
+  .dot.close { background-color: #ef4444; }
+  .dot.minimize { background-color: #f59e0b; }
+  .dot.expand { background-color: #10b981; }
+
+  .terminal-title {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    color: var(--theme-foreground);
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Terminal Content Area */
+  .terminal-body {
+    padding: 24px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    background: radial-gradient(
+      circle at center,
+      rgba(var(--theme-accent), 0.02) 0%,
+      rgba(0, 0, 0, 0) 80%
+    );
+  }
+
+  /* Alerts and Accents */
+  .system-alert {
+    color: #f59e0b;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 14px 0;
+  }
+
+  .diag-line {
+    margin: 4px 0;
+  }
+
+  .accent-text {
+    color: var(--theme-accent);
+    text-shadow: 0 0 8px rgba(var(--theme-accent), 0.35);
+  }
+
+  .error-text {
+    color: #ef4444;
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.35);
+  }
+
+  .fail-text {
+    color: #f87171;
+  }
+
+  .log-line {
+    margin: 4px 0;
+    opacity: 0.85;
+  }
+
+  /* Fun character cameo box */
+  .character-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+
+  .char-title {
+    font-size: 11px;
+    font-weight: bold;
+    opacity: 0.4;
+    margin: 0 0 8px 0;
+    letter-spacing: 0.5px;
+  }
+
+  .char-quotes {
+    display: flex;
+    flex-col: column;
+    gap: 8px;
+  }
+
+  .quote {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 2px 0;
+  }
+
+  .quote .icon {
+    font-size: 14px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  }
+
+  .char-name {
+    color: var(--theme-accent);
+    font-weight: 700;
+    opacity: 0.9;
+  }
+
+  .quote .msg {
+    opacity: 0.8;
+    font-style: italic;
+  }
+
+  /* Subroutine recovery instructions and links */
+  .instructions {
+    font-weight: bold;
+    opacity: 0.7;
+    margin-top: 14px;
+  }
+
+  .recovery-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .cli-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--theme-foreground);
+    opacity: 0.75;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cli-link:hover {
+    opacity: 1;
+    background: rgba(var(--theme-accent), 0.06);
+    transform: translateX(4px);
+    color: var(--theme-accent);
+  }
+
+  .prompt-arrow {
+    color: var(--theme-accent);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.2s ease;
+  }
+
+  .cli-link:hover .prompt-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .cmd-path {
+    font-weight: bold;
+  }
+
+  .cli-link .comment {
+    color: var(--theme-foreground);
+    opacity: 0.35;
+    margin-left: auto;
+    font-size: 11px;
+    transition: opacity 0.25s ease;
+  }
+
+  .cli-link:hover .comment {
+    opacity: 0.55;
+    color: var(--theme-accent);
+  }
+
+  /* Blinking terminal cursor */
+  .blinking-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 14px;
+    background-color: var(--theme-accent);
+    box-shadow: 0 0 8px var(--theme-accent);
+    animation: blink 1s step-end infinite;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 640px) {
+    .terminal-body {
+      padding: 16px;
+      font-size: 12px;
+    }
+    .cli-link .comment {
+      display: none; /* Hide comments on extra small mobile to save space */
+    }
+    .char-quotes {
+      gap: 12px;
+    }
+    .quote {
+      flex-direction: column;
+      gap: 2px;
+    }
+    .quote .icon {
+      margin-bottom: 2px;
+    }
+  }
+
+  /* CRT CSS Animations */
+  @keyframes blink {
+    from, to { background-color: transparent; box-shadow: none; }
+    50% { background-color: var(--theme-accent); box-shadow: 0 0 8px var(--theme-accent); }
+  }
+
+  @keyframes screen-turn-on {
+    0% {
+      transform: scaleY(0.01) scaleX(0);
+      filter: brightness(3);
+      opacity: 0;
+    }
+    50% {
+      transform: scaleY(0.01) scaleX(1);
+      filter: brightness(3);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scaleY(1) scaleX(1);
+      filter: brightness(1);
+      opacity: 1;
+    }
+  }
+</style>
