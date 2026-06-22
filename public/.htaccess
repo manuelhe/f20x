@@ -1,0 +1,15 @@
+<IfModule mod_headers.c>
+    # HTML Pages
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # General Static Assets
+    <FilesMatch "\.(ico|gif|jpe?g|png|svg|webp|woff2?)$">
+        Header set Cache-Control "public, max-age=86400, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+ErrorDocument 404 /404.html
