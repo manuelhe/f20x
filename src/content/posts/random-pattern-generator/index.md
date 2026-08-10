@@ -2,7 +2,7 @@
 title: 'Demystifying the Random Avatar Generator: A JavaScript Code Analysis'
 published: 2025-01-23
 draft: false
-tags: ['javascript', 'svg', 'design-patterns', 'image-manipulation', 'code-analysis']
+tags: ['javascript', 'svg', 'design patterns', 'image manipulation', 'code analysis']
 toc: true
 coverImage:
   src: './random-pattern-generator.webp'

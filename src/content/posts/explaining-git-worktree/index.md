@@ -2,7 +2,7 @@
 title: 'The Git Command That Saved My Sanity on a Massive Enterprise Web Components Project'
 published: 2026-06-29
 draft: false
-tags: ['git', 'web development', 'frontend engineering', 'software-engineering', 'command-line']
+tags: ['git', 'web development', 'frontend engineering', 'software engineering', 'command line']
 toc: true
 coverImage:
   src: './worktree.webp'

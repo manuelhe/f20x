@@ -2,7 +2,7 @@
 title: 'From Blueprint to Caribbean Breezes: How We Built a Multilingual Web Platform for 1/10th the Cost Using Gemini'
 published: 2026-05-25
 draft: false
-tags: ['generative-ai', 'gemini', 'ai-web-development', 'tech-economics', 'software-engineering']
+tags: ['ai', 'gemini', 'web development', 'tech economics', 'software engineering']
 toc: true
 coverImage:
   src: './oceanviewflats.webp'

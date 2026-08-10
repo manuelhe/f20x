@@ -2,7 +2,7 @@
 title: 'Shrink Your Stash: Breaking Down the Ultimate WebP Converter Script'
 published: 2026-03-17
 draft: false
-tags: ['bash', 'webp', 'image-manipulation', 'parallel-processing', 'command-line']
+tags: ['bash', 'webp', 'image manipulation', 'parallel processing', 'command line'] 
 toc: true
 coverImage:
   src: './demo-bulkwebp.webp'
